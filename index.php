@@ -51,7 +51,7 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
 <h1>Zuri Forms</h1>
 
 <h5>Register</h5>
-    <form action="zuri.php" method="POST">
+    <form action="index.php" method="POST">
         <label>Name<label>
         <input type="text" name="name">
         <br><br>
@@ -59,7 +59,7 @@ if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password
         <input type="text" name="username">
         <br><br>
         <label>Password<label>
-        <input type="text" name="password">
+        <input type="password" name="password">
         <br><br>
         <input type="submit">
     </form>

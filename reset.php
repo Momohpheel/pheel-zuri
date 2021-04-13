@@ -7,22 +7,19 @@ if ( isset($_POST['oldpassword']) && isset($_POST['oldpassword'])){
 
         $old_password = $_POST['oldpassword'];
         $new_password = $_POST['newpassword'];
-
-        $file = fopen("register.txt", "r");
-        
-        $size = filesize("register.txt");
-        $data = fread($file, $size);
+       
+        $filepath = 'register.txt';
+        $content = file_get_contents($filepath);
+        $file = file("register.txt");
         
         $old_data =  $_SESSION['name'].' '.$old_password;
         $new_data =  $_SESSION['name'].' '.$new_password;
-        $position = strpos($data, $old_data);
-        echo $position;
-        $length = strlen($_SESSION['name'].' '.$old_password);
-        echo $length;
-        $new_data = substr_replace($data, $new_data, $position, $length);
-        // $file_write = fopen("register.txt", "a"); 
-        // fwrite($file_write, $new_data);
-        fclose($file);
+        //$file[$old_data] = $new_data;
+
+        $newcontent = str_replace($_SESSION['name'].' '.$old_password, $new_data, $content);
+        file_put_contents($filepath, $newcontent);
+        echo "Success, you can go back to the <a href='home.php'>home page</a> now";
+       
         
     }
 }
@@ -44,10 +41,10 @@ if ( isset($_POST['oldpassword']) && isset($_POST['oldpassword'])){
 <h5>Reset Password</h5>
     <form action="reset.php" method="POST">
         <label>Old Password<label>
-        <input type="text" name="newpassword">
+        <input type="text" name="oldpassword">
         <br><br>
         <label>New Password<label>
-        <input type="text" name="oldpassword">
+        <input type="text" name="newpassword">
         <br><br>
         <input type="submit">
     </form>
