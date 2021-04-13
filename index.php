@@ -1,10 +1,41 @@
 <?php
 
-//get session
-session_start();
+error_reporting(0);
+if (isset($_POST['name']) && isset($_POST['username']) && isset($_POST['password'])){
+    if (!empty($_POST['name']) && !empty($_POST['username']) && !empty($_POST['password'])){
 
-
-
+        $name = $_POST['name'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        
+        $file = fopen("register.txt", "a");
+        $file_r = fopen("register.txt", "r");
+        $size = filesize("register.txt");
+        $response = 0;
+       
+        if ($size > 0){
+            $data = fread($file_r, $size);
+            $arr = explode(",",$data);
+            for($i=0; $i<count($arr); $i++){
+                if ($arr[$i] == $username.' '.$password){
+                    $response = 1;
+                    
+                }
+            }
+        }
+      
+        
+        
+        if ($response == 1){
+            echo "Username already exists";
+        }else{
+            fwrite($file, $username.' '.$password.',');
+            fclose($file);
+            Header("Location: login.php");
+        }
+        
+    }
+}
 
 
 
@@ -17,15 +48,21 @@ session_start();
 </head>
 <body>
 
-<h1>Zuri Home Page</h1>
+<h1>Zuri Forms</h1>
 
-<h3>Home Page</h5>
-    <h1>You're welcome, <?php echo $_SESSION['name']; ?> </h1>
-    <form action="logout.php" method="POST">
-        <input type="submit" value="logout">
+<h5>Register</h5>
+    <form action="zuri.php" method="POST">
+        <label>Name<label>
+        <input type="text" name="name">
+        <br><br>
+        <label>Username<label>
+        <input type="text" name="username">
+        <br><br>
+        <label>Password<label>
+        <input type="text" name="password">
+        <br><br>
+        <input type="submit">
     </form>
-    <a href="reset.php">
-        reset password
-    </a>
+
 </body>
 </html>

@@ -17,7 +17,7 @@ if ( isset($_POST['username']) && isset($_POST['password'])){
         for($i=0; $i<count($arr); $i++){
             if ($arr[$i] == $username.' '.$password){
                 $_SESSION['name'] = $username;
-                Header("Location: index.php");
+                Header("Location: home.php");
 
             }
         }
